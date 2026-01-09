@@ -43,6 +43,11 @@ def get_config():
         default=os.environ.get("MCP_HOST", "127.0.0.1"),
         help="Host for SSE transport (default: 127.0.0.1)",
     )
+    parser.add_argument(
+        "--model",
+        default=os.environ.get("CLAUDE_MODEL", ""),
+        help="Claude model to use (e.g. claude-sonnet-4-20250514, opus)",
+    )
 
     # Parse known args only, so fastmcp can handle the rest if needed
     args, _ = parser.parse_known_args()
@@ -76,6 +81,10 @@ def execute_request(question: str) -> str:
     # -p: Print output to stdout (Headless mode)
     # --dangerously-skip-permissions: BYPASSES ALL CONFIRMATION PROMPTS
     cmd = [config.command, "-p", question, "--dangerously-skip-permissions"]
+    
+    # Add model flag if specified
+    if config.model:
+        cmd.extend(["--model", config.model])
 
     try:
         # Run the command in the current folder where the server was started

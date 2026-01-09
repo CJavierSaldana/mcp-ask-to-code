@@ -28,6 +28,15 @@ def get_config():
         help="Name of the function tool exposed to the LLM",
     )
     parser.add_argument(
+        "--tool-description",
+        default=os.environ.get(
+            "MCP_TOOL_DESCRIPTION",
+            "AUTONOMOUS AGENT: Solves a coding task or answers a question by running an internal agent.\n"
+            "This tool has full access to the filesystem, can run tests, read files, and analyze logic.",
+        ),
+        help="Description of the function tool exposed to the LLM",
+    )
+    parser.add_argument(
         "--command",
         default=os.environ.get("CLAUDE_CMD", "claude"),
         help="The binary to run (e.g., 'claude' or 'npx @anthropic-ai/claude-code')",
@@ -69,11 +78,10 @@ def strip_ansi(text: str) -> str:
 
 # --- 3. THE DYNAMIC TOOL ---
 # We register the tool dynamically to allow the name/description to be changed
-@mcp.tool(name=config.tool_name)
+@mcp.tool(name=config.tool_name, description=config.tool_description)
 def execute_request(question: str) -> str:
     """
-    AUTONOMOUS AGENT: Solves a coding task or answers a question by running an internal agent.
-    This tool has full access to the filesystem, can run tests, read files, and analyze logic.
+    Execute a request using the autonomous agent.
     """
     print(f"[{config.name}] Received Request: {question}")
 

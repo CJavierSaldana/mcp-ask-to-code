@@ -119,13 +119,19 @@ def main():
     sys.argv = [sys.argv[0]] + [
         arg
         for arg in sys.argv[1:]
-        if not arg.startswith(("--name", "--tool", "--command", "--port", "--host"))
+        if not arg.startswith(("--name", "--tool", "--command", "--port", "--host", "--model"))
     ]
     
     if config.port > 0:
-        # SSE transport mode - allows multiple sessions on different ports
-        print(f"[{config.name}] Starting SSE server on {config.host}:{config.port}")
-        mcp.run(transport="sse", host=config.host, port=config.port)
+        # SSE transport mode - use uvicorn directly for custom host/port
+        import uvicorn
+        print(f"[{config.name}] Starting SSE server on http://{config.host}:{config.port}")
+        uvicorn.run(
+            mcp.sse_app(),
+            host=config.host,
+            port=config.port,
+            log_level="info"
+        )
     else:
         # Default stdio transport mode
         mcp.run()
@@ -133,3 +139,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

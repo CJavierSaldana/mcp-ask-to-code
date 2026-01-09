@@ -2,11 +2,7 @@
   "mcpServers": {
     "ask-to-code": {
       "command": "mcp-ask-to-code",
-      "args": [],
-      "env": {
-        "MCP_NAME": "Autonomous Code Agent",
-        "MCP_TOOL_NAME": "ask_autonomous_agent"
-      }
+      "args": ["--model", "claude-sonnet-4-20250514"]
     }
   }
 }

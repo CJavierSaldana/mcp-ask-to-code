@@ -66,7 +66,11 @@ def get_config():
 config = get_config()
 
 # Initialize Server with the custom name
-mcp = FastMCP(config.name)
+mcp = FastMCP(
+    config.name,
+    host=config.host,
+    port=config.port if config.port > 0 else 8000,
+)
 
 
 # --- 2. HELPERS ---

@@ -49,8 +49,8 @@ def get_config():
     )
     parser.add_argument(
         "--host",
-        default=os.environ.get("MCP_HOST", "127.0.0.1"),
-        help="Host for SSE transport (default: 127.0.0.1)",
+        default=os.environ.get("MCP_HOST", "0.0.0.0"),
+        help="Host for SSE transport (default: 0.0.0.0)",
     )
     parser.add_argument(
         "--model",

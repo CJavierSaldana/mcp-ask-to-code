@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-ask-to-code"
+version = "0.1.0"
+description = "Autonomous MCP server that uses Claude Code CLI to solve coding problems"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Carlos Saldana" }
+]
+keywords = ["mcp", "claude", "ai", "coding-agent", "autonomous"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "mcp[cli]>=1.0.0",
+]
+
+[project.scripts]
+mcp-ask-to-code = "mcp_ask_to_code.server:main"
+
+[project.urls]
+Homepage = "https://github.com/cjaviersaldana/mcp-ask-to-code"
+Repository = "https://github.com/cjaviersaldana/mcp-ask-to-code"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_ask_to_code"]
